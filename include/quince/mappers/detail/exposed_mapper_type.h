@@ -47,6 +47,7 @@ template<typename T>
 class is_polymorphically_mapped : public std::integral_constant<
     bool,
         std::is_arithmetic<T>::value
+    ||  std::is_enum<T>::value
     ||  std::is_same<T, serial>::value
     ||  std::is_same<T, std::string>::value
     ||  std::is_same<T, timestamp>::value
