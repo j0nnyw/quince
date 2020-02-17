@@ -47,6 +47,7 @@ public:
     void set(const time_type &);
     void set(const date_type &);
     void set(const json_type &);
+    void set(const jsonb_type &);
     void set(const byte_vector &);
 
     template<typename CxxType>
@@ -72,6 +73,7 @@ public:
     void get(time_type &) const;
     void get(date_type &) const;
     void get(json_type &) const;
+    void get(jsonb_type &) const;
     void get(byte_vector &) const;
 
     column_type type() const;
