@@ -50,6 +50,16 @@ void cell::set(const date_type &src) {
     set_string(src);
 }
 
+void cell::set(const json_type &src) {
+    set_type(get_column_type<json_type>());
+    set_string(src);
+}
+
+void cell::set(const jsonb_type &src) {
+    set_type(get_column_type<jsonb_type>());
+    set_string(src);
+}
+
 void cell::set(const byte_vector &src) {
     set_type(get_column_type<byte_vector>());
     _bytes = src;
@@ -73,6 +83,16 @@ void cell::get(time_type &dest) const {
 
 void cell::get(date_type &dest) const {
     check_type<string>();
+    get_string(dest);
+}
+
+void cell::get(json_type &dest) const {
+    check_type<json_type>();
+    get_string(dest);
+}
+
+void cell::get(jsonb_type &dest) const {
+    check_type<jsonb_type>();
     get_string(dest);
 }
 

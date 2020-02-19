@@ -140,6 +140,11 @@ public:
     using general_table<Value>::specify_key_from_ptkm;
 
 
+    template<typename PtrToKeyMember>
+    void specify_serial_key_part (PtrToKeyMember ptkm) {
+        _serial_mapper = &general_table<Value>::get_value_mapper().lookup(ptkm);
+    }
+
     // --- Everything from here to end of class is for quince internal use only. ---
 
     virtual std::unique_ptr<cloneable>
@@ -147,9 +152,20 @@ public:
         return quince::make_unique<table<Value>>(*this);
     }
 
+    const serial_mapper *
+    readback_mapper() const {
+        if (nullptr != _serial_mapper) {
+            return dynamic_cast<const serial_mapper *>(_serial_mapper);
+        }
+        else {
+           return nullptr;
+        }
+    }
+
 private:
     table(const database &, const std::string &, const mapping_customization &&) = delete;
     template<typename Ptkm> table(const database &, const std::string &, Ptkm, const mapping_customization &&) = delete;
+    const abstract_mapper_base *_serial_mapper = nullptr;
 };
 
 
