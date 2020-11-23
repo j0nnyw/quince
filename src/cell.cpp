@@ -60,6 +60,11 @@ void cell::set(const jsonb_type &src) {
     set_string(src);
 }
 
+void cell::set(const numeric_type &src) {
+    set_type(get_column_type<numeric_type>());
+    set_string(src);
+}
+
 void cell::set(const byte_vector &src) {
     set_type(get_column_type<byte_vector>());
     _bytes = src;
@@ -93,6 +98,11 @@ void cell::get(json_type &dest) const {
 
 void cell::get(jsonb_type &dest) const {
     check_type<jsonb_type>();
+    get_string(dest);
+}
+
+void cell::get(numeric_type &dest) const {
+    check_type<string>();
     get_string(dest);
 }
 
