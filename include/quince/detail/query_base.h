@@ -66,18 +66,18 @@ public:
     group(const abstract_mapper<T> &... mappers) const;
 
     template<typename T>
-    void
+    std::uint64_t
     update(const abstract_mapper<T> &dest, const abstract_mapper<T> &src) {
         const abstract_mapper_base &src_as_amb = src;
-        update_impl(dest, src_as_amb);
+        return update_impl(dest, src_as_amb);
     }
 
     template<typename T>
-    void
+    std::uint64_t
     update(const abstract_mapper<T> &dest, const T &src) {
         row src_as_row(& get_database());
         dest.to_row(src, src_as_row);
-        update_impl(dest, src_as_row);
+        return update_impl(dest, src_as_row);
     }
 
     template<typename T, typename Result, typename Source>
@@ -208,9 +208,9 @@ protected:
 
 private:
     template<typename T, typename Src>  // Src is abstract_mapper_base or row
-    void update_impl(const abstract_mapper<T> &dest, const Src &src) {
+    std::uint64_t update_impl(const abstract_mapper<T> &dest, const Src &src) {
         const table_base &t = table();
-        t.update_with_no_output(dest, src, predicate_applicable_to(t));
+        return t.update_with_no_output(dest, src, predicate_applicable_to(t));
     }
 
     struct combination;

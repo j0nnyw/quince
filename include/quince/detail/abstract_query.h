@@ -134,11 +134,11 @@ public:
 
     // TODO generalize this to delegate to versions of update that return a value
     template<typename... Args>
-    void
+    std::uint64_t
     update(Args &&... args) {
         if (auto q = dynamic_cast<query<Value> *>(this))
-            q->update(std::forward<Args>(args)...);
-        wrapped().update(std::forward<Args>(args)...);
+            return q->update(std::forward<Args>(args)...);
+        return wrapped().update(std::forward<Args>(args)...);
     }
 
     template<typename Mapper>

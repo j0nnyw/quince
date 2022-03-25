@@ -42,6 +42,7 @@ public:
 
     virtual bool                    unchecked_exec(const sql &) = 0;
     virtual void                    exec(const sql &) = 0;
+    virtual std::uint64_t           exec_with_count_output(const sql &) = 0;
     virtual result_stream           exec_with_stream_output(const sql &, uint32_t fetch_size) = 0;
     virtual std::unique_ptr<row>    exec_with_one_output(const sql &) = 0;
     virtual std::unique_ptr<row>    next_output(const result_stream &) = 0;

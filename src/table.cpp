@@ -93,25 +93,25 @@ table_base::sql_insert(const row &input) {
 
 
 template<typename Src>
-void
+std::uint64_t
 table_base::update_with_no_output(
     const abstract_mapper_base &dest,
     const Src &src,
     const abstract_predicate &pred
 ) const {
-    _database.get_session()->exec(
+    return _database.get_session()->exec_with_count_output(
         *sql_update(dest, src, pred)
     );
 }
 template
-void
+std::uint64_t
 table_base::update_with_no_output<abstract_mapper_base>(
     const abstract_mapper_base &,
     const abstract_mapper_base &,
     const abstract_predicate &
 ) const;
 template
-void
+std::uint64_t
 table_base::update_with_no_output<row>(
     const abstract_mapper_base &,
     const row &,
