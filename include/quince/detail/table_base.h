@@ -185,7 +185,7 @@ private:
     }
 
     template<typename Src> // abstract_mapper_base or row
-    void
+    std::uint64_t
     update_with_no_output(
         const abstract_mapper_base &dest,
         const Src &src,
