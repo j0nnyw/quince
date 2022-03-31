@@ -330,7 +330,7 @@ sql::write_extrinsic_comparison(relation r, const abstract_column_sequence &lhs,
 
         const cell &value = *rhs.find_cell(c.name());
         const string r = next_value_reference(value);
-        rhs_thunks.push_back([=](sql &cmd) {
+        rhs_thunks.push_back([=, this](sql &cmd) {
             write(r);
         });
         attach_value(value);
