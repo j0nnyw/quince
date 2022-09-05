@@ -71,6 +71,11 @@ void cell::set(const byte_vector &src) {
     _is_binary = true;
 }
 
+void cell::set(const timestamp_with_tz &src) {
+    set_type(get_column_type<timestamp_with_tz>());
+    set_string(src);
+}
+
 void cell::get(string &dest) const {
     check_type<string>();
     get_string(dest);
@@ -109,6 +114,11 @@ void cell::get(numeric_type &dest) const {
 void cell::get(byte_vector &dest) const {
     check_type<byte_vector>();
     dest = _bytes;
+}
+
+void cell::get(timestamp_with_tz &dest) const {
+    check_type<string>();
+    get_string(dest);
 }
 
 column_type cell::type() const {

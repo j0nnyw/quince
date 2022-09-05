@@ -57,6 +57,7 @@ class is_polymorphically_mapped : public std::integral_constant<
     ||  std::is_same<T, date_type>::value
     ||  std::is_same<T, json_type>::value
     ||  std::is_same<T, jsonb_type>::value
+    ||  std::is_same<T, timestamp_with_tz>::value
     ||  std::is_same<T, numeric_type>::value
     ||  std::is_same<T, std::vector<uint8_t>>::value
     ||  std::is_base_of< std::array<std::byte, sizeof(T)>, T>::value
