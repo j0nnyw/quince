@@ -7,8 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <string>
-#include <boost/serialization/strong_typedef.hpp>
-
+#include <boost/serialization/strong_typedef.hpp>>
 
 /*
     Everything in this file is for quince internal use only.

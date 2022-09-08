@@ -117,7 +117,7 @@ void cell::get(byte_vector &dest) const {
 }
 
 void cell::get(timestamp_with_tz &dest) const {
-    check_type<string>();
+    check_type<timestamp_with_tz>();
     get_string(dest);
 }
 
