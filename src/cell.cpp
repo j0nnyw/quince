@@ -6,7 +6,7 @@
 #include <boost/asio/detail/socket_ops.hpp>  // for htonl() etc.
 #include <quince/detail/cell.h>
 #include <quince/detail/util.h>
-#include <iostream>
+#include <string>
 
 using std::string;
 
@@ -38,8 +38,6 @@ void cell::set(const string &src) {
 
 void cell::set(const timestamp &src) {
     set_type(get_column_type<timestamp>());
-    std::cout << "Type of timestamp _type is: ";
-    std::cout << (_type == column_type::string ? "string" : _type == column_type::timestamp ? "timestmap" : "unknown");
     set_string(src);
 }
 
@@ -85,8 +83,6 @@ void cell::get(string &dest) const {
 }
 
 void cell::get(timestamp &dest) const {
-    std::cout << "Type of timestamp _type is: ";
-    std::cout << (_type == column_type::string ? "string" : _type == column_type::timestamp ? "timestmap" : "unknown");
     check_type<string>();
     get_string(dest);
 }
@@ -122,10 +118,8 @@ void cell::get(byte_vector &dest) const {
 }
 
 void cell::get(timestamp_with_tz &dest) const {
-    //check_type<string>();
+    check_type<string>();
     get_string(dest);
-    std::cout << "at the point of cell::get(timestamp_with_tz), the value is: ";
-    std::cout << string(dest) << "\n";
 }
 
 column_type cell::type() const {
@@ -233,13 +227,6 @@ template void cell::set_data<8>(const void *);
 
 
 void cell::get_string(string &string) const {
-
-    std::cout << "\ninside cell::get_string\n";
-    const char* char_ptr = cell::chars();
-    for(int i = 0; i < cell::size(); i++ )
-    {
-        std::cout << char_ptr[i];
-    }
     string.assign(chars(), size());
 }
 

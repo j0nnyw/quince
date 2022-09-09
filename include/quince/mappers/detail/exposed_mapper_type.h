@@ -20,7 +20,6 @@
 #include <quince/mappers/detail/static_mapper_type.h>
 
 
-
 /*
     The purpose of this file is to define the alias template "exposed_mapper_type".
     All the other definitions you see are helpers for exposed_mapper_type; they are not used outside.
