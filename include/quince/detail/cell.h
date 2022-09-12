@@ -50,6 +50,7 @@ public:
     void set(const jsonb_type &);
     void set(const numeric_type &);
     void set(const byte_vector &);
+    void set(const timestamp_with_tz &);
 
     template<typename CxxType>
     void
@@ -77,6 +78,7 @@ public:
     void get(jsonb_type &) const;
     void get(numeric_type &) const;
     void get(byte_vector &) const;
+    void get(timestamp_with_tz &) const;
 
     column_type type() const;
 
