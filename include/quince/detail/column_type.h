@@ -19,6 +19,9 @@
 #include <quince/detail/jsonb_type.h>
 #include <quince/detail/numeric_type.h>
 #include <quince/detail/timestamp_with_tz.h>
+#include <quince/detail/array_of_int16.h>
+#include <quince/detail/array_of_int32.h>
+#include <quince/detail/array_of_int64.h>
 
 
 /*
@@ -48,6 +51,9 @@ enum class column_type {
     numeric_type,
     byte_vector,
     timestamp_with_tz,
+    array_of_int16,
+    array_of_int32,
+    array_of_int64,
     none
 };
 
@@ -65,23 +71,26 @@ namespace quince {
 // and hence they are the types for which direct_mappers are possible.  See:
 // http://quince-lib.com/custom/predefined.html#custom.predefined.direct_mapper_t .
 //
-QUINCE_SPECIFY_COLUMN_TYPE(bool,                    column_type::boolean)
-QUINCE_SPECIFY_COLUMN_TYPE(int16_t,                 column_type::small_int)
-QUINCE_SPECIFY_COLUMN_TYPE(int32_t,                 column_type::integer)
-QUINCE_SPECIFY_COLUMN_TYPE(int64_t,                 column_type::big_int)
-QUINCE_SPECIFY_COLUMN_TYPE(serial,                  column_type::big_serial)
-QUINCE_SPECIFY_COLUMN_TYPE(float,                   column_type::floating_point)
-QUINCE_SPECIFY_COLUMN_TYPE(double,                  column_type::double_precision)
-QUINCE_SPECIFY_COLUMN_TYPE(std::string,             column_type::string)
-QUINCE_SPECIFY_COLUMN_TYPE(quince::timestamp,       column_type::timestamp)
-QUINCE_SPECIFY_COLUMN_TYPE(quince::time_type,       column_type::time_type)
-QUINCE_SPECIFY_COLUMN_TYPE(quince::date_type,       column_type::date_type)
-QUINCE_SPECIFY_COLUMN_TYPE(quince::json_type,       column_type::json_type)
-QUINCE_SPECIFY_COLUMN_TYPE(quince::jsonb_type,      column_type::jsonb_type)
-QUINCE_SPECIFY_COLUMN_TYPE(quince::numeric_type,    column_type::numeric_type)
-QUINCE_SPECIFY_COLUMN_TYPE(std::vector<uint8_t>,    column_type::byte_vector)
-QUINCE_SPECIFY_COLUMN_TYPE(quince::timestamp_with_tz, column_type::timestamp_with_tz)
-QUINCE_SPECIFY_COLUMN_TYPE(boost::none_t,           column_type::none)
+QUINCE_SPECIFY_COLUMN_TYPE(bool,                        column_type::boolean)
+QUINCE_SPECIFY_COLUMN_TYPE(int16_t,                     column_type::small_int)
+QUINCE_SPECIFY_COLUMN_TYPE(int32_t,                     column_type::integer)
+QUINCE_SPECIFY_COLUMN_TYPE(int64_t,                     column_type::big_int)
+QUINCE_SPECIFY_COLUMN_TYPE(serial,                      column_type::big_serial)
+QUINCE_SPECIFY_COLUMN_TYPE(float,                       column_type::floating_point)
+QUINCE_SPECIFY_COLUMN_TYPE(double,                      column_type::double_precision)
+QUINCE_SPECIFY_COLUMN_TYPE(std::string,                 column_type::string)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::timestamp,           column_type::timestamp)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::time_type,           column_type::time_type)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::date_type,           column_type::date_type)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::json_type,           column_type::json_type)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::jsonb_type,          column_type::jsonb_type)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::numeric_type,        column_type::numeric_type)
+QUINCE_SPECIFY_COLUMN_TYPE(std::vector<uint8_t>,        column_type::byte_vector)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::timestamp_with_tz,   column_type::timestamp_with_tz)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int16,      column_type::array_of_int16)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int32,      column_type::array_of_int32)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int64,      column_type::array_of_int64)
+QUINCE_SPECIFY_COLUMN_TYPE(boost::none_t,               column_type::none)
 
 
 // get_column_type<T>() looks up the column_type c that was defined somewhere with
