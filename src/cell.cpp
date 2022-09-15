@@ -77,6 +77,21 @@ void cell::set(const timestamp_with_tz &src) {
     set_string(src);
 }
 
+void cell::set(const array_of_int16 &src) {
+    set_type(get_column_type<array_of_int16>());
+    set_string(src);
+}
+
+void cell::set(const array_of_int32 &src) {
+    set_type(get_column_type<array_of_int32>());
+    set_string(src);
+}
+
+void cell::set(const array_of_int64 &src) {
+    set_type(get_column_type<array_of_int64>());
+    set_string(src);
+}
+
 void cell::get(string &dest) const {
     check_type<string>();
     get_string(dest);
@@ -118,6 +133,21 @@ void cell::get(byte_vector &dest) const {
 }
 
 void cell::get(timestamp_with_tz &dest) const {
+    check_type<string>();
+    get_string(dest);
+}
+
+void cell::get(array_of_int16 &dest) const {
+    check_type<string>();
+    get_string(dest);
+}
+
+void cell::get(array_of_int32 &dest) const {
+    check_type<string>();
+    get_string(dest);
+}
+
+void cell::get(array_of_int64 &dest) const {
     check_type<string>();
     get_string(dest);
 }

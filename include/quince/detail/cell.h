@@ -51,6 +51,9 @@ public:
     void set(const numeric_type &);
     void set(const byte_vector &);
     void set(const timestamp_with_tz &);
+    void set(const array_of_int16 &);
+    void set(const array_of_int32 &);
+    void set(const array_of_int64 &);
 
     template<typename CxxType>
     void
@@ -79,6 +82,9 @@ public:
     void get(numeric_type &) const;
     void get(byte_vector &) const;
     void get(timestamp_with_tz &) const;
+    void get(array_of_int16 &) const;
+    void get(array_of_int32 &) const;
+    void get(array_of_int64 &) const;
 
     column_type type() const;
 
