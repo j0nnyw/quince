@@ -13,7 +13,6 @@
 #include <chrono>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
-#include <date/date.h>
 #include <date/tz.h>
 #include <quince/serial.h>
 #include <quince/detail/column_type.h>
@@ -61,6 +60,9 @@ class is_polymorphically_mapped : public std::integral_constant<
     ||  std::is_same<T, jsonb_type>::value
     ||  std::is_same<T, timestamp_with_tz>::value
     ||  std::is_same<T, numeric_type>::value
+    ||  std::is_same<T, array_of_int16>::value
+    ||  std::is_same<T, array_of_int32>::value
+    ||  std::is_same<T, array_of_int64>::value
     ||  std::is_same<T, std::vector<uint8_t>>::value
     ||  std::is_base_of< std::array<std::byte, sizeof(T)>, T>::value
     ||  std::is_base_of< std::vector<std::byte>, T>::value
@@ -70,6 +72,9 @@ class is_polymorphically_mapped : public std::integral_constant<
     ||  std::is_same<T, boost::multiprecision::cpp_dec_float_100>::value
     ||  std::is_same<T, date::zoned_time<std::chrono::milliseconds>>::value
     ||  std::is_same<T, date::zoned_time<std::chrono::microseconds>>::value
+    ||  std::is_same<T, std::vector<std::int16_t>>::value
+    ||  std::is_same<T, std::vector<std::int32_t>>::value
+    ||  std::is_same<T, std::vector<std::int64_t>>::value
     ||  std::is_empty<T>::value  // for types defined by QUINCE_DEFINE_SERVER_ONLY_TYPE
 >
 {};

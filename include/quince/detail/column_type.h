@@ -19,6 +19,9 @@
 #include <quince/detail/jsonb_type.h>
 #include <quince/detail/numeric_type.h>
 #include <quince/detail/timestamp_with_tz.h>
+#include <quince/detail/array_of_int16.h>
+#include <quince/detail/array_of_int32.h>
+#include <quince/detail/array_of_int64.h>
 
 
 /*
@@ -48,6 +51,9 @@ enum class column_type {
     numeric_type,
     byte_vector,
     timestamp_with_tz,
+    array_of_int16,
+    array_of_int32,
+    array_of_int64,
     none
 };
 
@@ -81,6 +87,9 @@ QUINCE_SPECIFY_COLUMN_TYPE(quince::jsonb_type,          column_type::jsonb_type)
 QUINCE_SPECIFY_COLUMN_TYPE(quince::numeric_type,        column_type::numeric_type)
 QUINCE_SPECIFY_COLUMN_TYPE(std::vector<uint8_t>,        column_type::byte_vector)
 QUINCE_SPECIFY_COLUMN_TYPE(quince::timestamp_with_tz,   column_type::timestamp_with_tz)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int16,      column_type::array_of_int16)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int32,      column_type::array_of_int32)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int64,      column_type::array_of_int64)
 QUINCE_SPECIFY_COLUMN_TYPE(boost::none_t,               column_type::none)
 
 
