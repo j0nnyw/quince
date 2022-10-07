@@ -48,13 +48,10 @@ private:
     size_t _created_element_count;
 };
 
-
 QUINCE_SUPPRESS_MSVC_DOMINANCE_WARNING
 
-// tuple_mapper<Es...> is the mapper class for std::tuple<Es...>
-//
 template<typename... Es>
-class tuple_mapper : public abstract_mapper<std::tuple<Es...>>, public tuple_mapper_base
+class basic_tuple_mapper : public abstract_mapper<std::tuple<Es...>>
 {
 private:
     typedef std::tuple<const exposed_mapper_type<Es> *...> member_mappers_tuple_type;
@@ -73,43 +70,11 @@ public:
 
     // --- Everything from here to end of class is for quince internal use only. ---
 
-    // Constructor that is used whenever *this is to be some table's value mapper, or part of some table's
-    // value mapper:
-    //
-    tuple_mapper(const boost::optional<std::string> &name, const mapper_factory &creator) :
+    basic_tuple_mapper(const boost::optional<std::string> &name, const std::tuple<const exposed_mapper_type<Es> *...>& member_mappers) :
         abstract_mapper_base(name),
         abstract_mapper<value_type>(name),
-        tuple_mapper_base(name),
-
-        // I want to say:
-        //
-        //      _member_mappers{&add<Es>(creator)...}
-        //
-        // The language spec says that elements of a braced initializer list are evaluated
-        // left-to-right, so the add()s should generate their sequential column names properly,
-        // i.e. in ascending order from left to right.  However MSVC doesn't respect that
-        // language rule, so what follows is a workaround.
-        //
-        // TODO: when MSVC is fixed, do what I wanted and then delete make_member_mappers()
-        // and its helper.  Probably also change the elements of _member_mappers, from pointers
-        // to references.
-        //
-        _member_mappers(make_member_mappers(creator))
+        _member_mappers(member_mappers)
     {}
-
-    // Constructor that is used whenever *this is to be a collector class for select() or a function in the join() family:
-    //
-    explicit tuple_mapper(const exposed_mapper_type<Es> &... member_mappers) :
-        abstract_mapper_base(boost::none),
-        abstract_mapper<value_type>(boost::none),
-        tuple_mapper_base(boost::none),
-        _member_mappers(&adopt(member_mappers)...)
-    {}
-
-    virtual std::unique_ptr<cloneable>
-    clone_impl() const override {
-        return quince::make_unique<tuple_mapper<Es...>>(*this);
-    }
 
     // May reintroduce this one day when more STL implementations support the corresponding feature
     // of std::tuple.
@@ -162,15 +127,9 @@ public:
     }
 
 private:
+    template <typename...> friend class tuple_mapper;
+
     static const size_t N = sizeof...(Es);
-
-    std::tuple<const exposed_mapper_type<Es> * ...>
-    make_member_mappers(const mapper_factory &creator) {
-        std::tuple<const exposed_mapper_type<Es> * ...> result;
-        make_member_mappers_helper(creator, result, counter_tag<0>());
-        return result;
-    }
-
 
     template<size_t I>
     void
@@ -234,6 +193,66 @@ private:
     }
     static void static_forbid_optionals_helper(counter_tag<N>)  {}
 
+    const member_mappers_tuple_type _member_mappers;
+};
+
+// tuple_mapper<Es...> is the mapper class for std::tuple<Es...>
+//
+template<typename... Es>
+class tuple_mapper : public tuple_mapper_base, public basic_tuple_mapper<Es...>
+{
+public:
+    // --- Everything from here to end of class is for quince internal use only. ---
+
+    // Constructor that is used whenever *this is to be some table's value mapper, or part of some table's
+    // value mapper:
+    //
+    tuple_mapper(const boost::optional<std::string> &name, const mapper_factory &creator) :
+        abstract_mapper_base(name),
+        tuple_mapper_base(name),
+
+        // I want to say:
+        //
+        //      basic_tuple_mapper<Es...>{name, &add<Es>(creator)...}
+        //
+        // The language spec says that elements of a braced initializer list are evaluated
+        // left-to-right, so the add()s should generate their sequential column names properly,
+        // i.e. in ascending order from left to right.  However MSVC doesn't respect that
+        // language rule, so what follows is a workaround.
+        //
+        // TODO: when MSVC is fixed, do what I wanted and then delete make_member_mappers()
+        // and its helper.  Probably also change the elements of _member_mappers, from pointers
+        // to references.
+        //
+        basic_tuple_mapper<Es...>(name, make_member_mappers(creator))
+    {}
+
+    // Constructor that is used whenever *this is to be a collector class for select() or a function in the join() family:
+    //
+    explicit tuple_mapper(const exposed_mapper_type<Es> &... member_mappers) :
+        abstract_mapper_base(boost::none),
+        tuple_mapper_base(boost::none),
+        basic_tuple_mapper<Es...>(boost::none, std::make_tuple(&adopt(member_mappers)...))
+    {}
+
+    virtual std::unique_ptr<cloneable>
+    clone_impl() const override {
+        return quince::make_unique<tuple_mapper<Es...>>(*this);
+    }
+
+private:
+    template<size_t I>
+    using counter_tag = std::integral_constant<size_t, I>;
+
+    static const size_t N = sizeof...(Es);
+
+    std::tuple<const exposed_mapper_type<Es> * ...>
+    make_member_mappers(const mapper_factory &creator) {
+        std::tuple<const exposed_mapper_type<Es> * ...> result;
+        make_member_mappers_helper(creator, result, counter_tag<0>());
+        return result;
+    }
+
     template<size_t I>
     void
     make_member_mappers_helper(
@@ -247,9 +266,24 @@ private:
         make_member_mappers_helper(creator, accumulator, counter_tag<I+1>());
     }
     void make_member_mappers_helper(const mapper_factory &, std::tuple<const exposed_mapper_type<Es>*...> &, counter_tag<N>)  {}
-
-    const member_mappers_tuple_type _member_mappers;
 };
+
+template<typename... Es>
+class tuple_mapper_ref : public basic_tuple_mapper<Es...>
+{
+public:
+    explicit tuple_mapper_ref(const exposed_mapper_type<Es> &... member_mappers) :
+        abstract_mapper_base(boost::none),
+        basic_tuple_mapper<Es...>(boost::none, std::make_tuple(&member_mappers...))
+    {}
+
+    virtual std::unique_ptr<cloneable>
+    clone_impl() const override {
+        return quince::make_unique<tuple_mapper_ref<Es...>>(*this);
+    }
+};
+
+template <typename... Es> tuple_mapper_ref(const abstract_mapper<Es> &...) -> tuple_mapper_ref<Es...>;
 
 QUINCE_UNSUPPRESS_MSVC_WARNING
 
