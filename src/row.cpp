@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <assert.h>
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
 #include <quince/detail/row.h>
 #include <quince/detail/util.h>
