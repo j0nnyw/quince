@@ -59,7 +59,7 @@ make_case_expressionist(
             column_id_set result;
             if (_switch)
                 add_to_set(result, _switch->imports());
-            for (const auto c: _clauses) {
+            for (const auto &c: _clauses) {
                 add_to_set(result, c.first->imports());
                 add_to_set(result, c.second->imports());
             }
