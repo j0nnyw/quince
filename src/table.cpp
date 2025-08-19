@@ -190,7 +190,7 @@ table_base::write_table_reference(sql &cmd) const {
     cmd.write_quoted(_binomen);
 }
 
-column_id_set 
+column_id_set
 table_base::aliased_columns() const {
     return {};
 }

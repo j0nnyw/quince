@@ -195,7 +195,7 @@ sql::write_function_call(const string &function_name, const vector<const column_
         write(function_name);
     else
         write_quoted(function_name);
-    
+
     write("(");
     comma_separated_list_scope list_scope(*this);
     for (const auto arg: args) {
@@ -680,7 +680,7 @@ sql::aliased_columns_scope::aliased_columns_scope(sql &cmd, const column_id_set 
 {
     _command._aliased_columns = aliaseds;
 }
-    
+
 sql::aliased_columns_scope::~aliased_columns_scope() {
     _command._aliased_columns = _pending;
 }

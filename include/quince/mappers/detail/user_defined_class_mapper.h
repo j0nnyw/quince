@@ -80,7 +80,7 @@ The following is what it expands into, minus complications 1 and 2, and with:
         {}
 
         virtual ~QUINCE_MAPPER_point()  {}
-       
+
         virtual std::unique_ptr<cloneable>
         clone_impl() const override {
             return quince::make_unique<QUINCE_MAPPER_point>(*this);

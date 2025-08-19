@@ -112,7 +112,7 @@ public:
     virtual void write_group_by(const std::vector<const abstract_mapper_base *> &);
     virtual void write_ordered_by(const std::vector<const abstract_mapper_base *> &);
     virtual void write_values(const abstract_mapper_base &, const row &, boost::optional<column_id> excluded);
-    virtual void write_cross_join(const std::vector<const abstract_query_base *> &joinees);   
+    virtual void write_cross_join(const std::vector<const abstract_query_base *> &joinees);
     virtual void write_qualified_join(const abstract_query_base &lhs, const abstract_query_base &rhs, conditional_junction_type);
     virtual void write_combination(combination_type type, bool all, const query_base &rhs);
     virtual void write_on(const abstract_predicate &);
@@ -286,7 +286,7 @@ protected:
     explicit sql(const database &);
 
     typedef std::function<void(sql &)> thunk;
-    
+
     void attach_cell(const cell &);
 
     virtual void attach_value(const cell &);

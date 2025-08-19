@@ -92,6 +92,11 @@ void cell::set(const array_of_int64 &src) {
     set_string(src);
 }
 
+void cell::set(const array_of_string &src) {
+    set_type(get_column_type<array_of_string>());
+    set_string(src);
+}
+
 void cell::get(string &dest) const {
     check_type<string>();
     get_string(dest);
@@ -148,6 +153,11 @@ void cell::get(array_of_int32 &dest) const {
 }
 
 void cell::get(array_of_int64 &dest) const {
+    check_type<string>();
+    get_string(dest);
+}
+
+void cell::get(array_of_string &dest) const {
     check_type<string>();
     get_string(dest);
 }

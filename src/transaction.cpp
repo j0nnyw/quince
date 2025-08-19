@@ -58,7 +58,7 @@ public:
             throw;
         }
     }
-    
+
     void
     abort() {
         if (! is_running())  throw no_current_txn_exception();

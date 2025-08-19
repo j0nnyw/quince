@@ -60,7 +60,7 @@ protected:
     explicit exprn_mapper_base(std::unique_ptr<const abstract_expressionist>);
 
     const abstract_expressionist &get_expressionist() const;
-    
+
     static std::unique_ptr<const abstract_expressionist>
     make_delegating_expressionist(const abstract_mapper_base &);
 
@@ -245,7 +245,7 @@ public:
         return base_exprn_mapper::a_priori_value();
     }
     virtual void
-    allow_all_null() const override { 
+    allow_all_null() const override {
         base_exprn_mapper::allow_all_null();
     }
     virtual column_type

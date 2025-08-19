@@ -29,8 +29,8 @@
     1.  If T is an polymorphically mapped type (i.e. an arithmetic type, serial,
         std::string, vector<uint8_t>, or an artefact of QUINCE_DEFINE_SERVER_ONLY_TYPE)
         then exposed_mapper_type<T> is an alias of abstract_mapper<T>.
-    
-    2.  It T is a statically mapped type (i.e. a boost::optional, std::tuple, or
+
+    2.  If T is a statically mapped type (i.e. a boost::optional, std::tuple, or
         a mapped user-defined class), then exposed_mapper_type<T> is an alias of
         static_mapper_type<T>.
 */
@@ -63,6 +63,7 @@ class is_polymorphically_mapped : public std::integral_constant<
     ||  std::is_same<T, array_of_int16>::value
     ||  std::is_same<T, array_of_int32>::value
     ||  std::is_same<T, array_of_int64>::value
+    ||  std::is_same<T, array_of_string>::value
     ||  std::is_same<T, std::vector<uint8_t>>::value
     ||  std::is_base_of< std::array<std::byte, sizeof(T)>, T>::value
     ||  std::is_base_of< std::vector<std::byte>, T>::value
@@ -75,6 +76,7 @@ class is_polymorphically_mapped : public std::integral_constant<
     ||  std::is_same<T, std::vector<std::int16_t>>::value
     ||  std::is_same<T, std::vector<std::int32_t>>::value
     ||  std::is_same<T, std::vector<std::int64_t>>::value
+    ||  std::is_same<T, std::vector<std::string>>::value
     ||  std::is_empty<T>::value  // for types defined by QUINCE_DEFINE_SERVER_ONLY_TYPE
 >
 {};
