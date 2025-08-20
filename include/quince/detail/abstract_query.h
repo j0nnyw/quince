@@ -200,7 +200,7 @@ public:
             *this,
             that,
             pred,
-            conditional_junction_type::inner,
+            conditional_junction_type::left,
             (Value *) nullptr,
             (boost::optional<V> *) nullptr
         );
