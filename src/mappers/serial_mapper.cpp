@@ -48,7 +48,7 @@ serial_mapper::to_row(const serial &src, row &dest) const {
 column_type
 serial_mapper::get_column_type(bool is_generated) const {
     if (is_generated)  return column_type::big_serial;
-    
+
     return direct_mapper<int64_t>::get_column_type(false);
 }
 

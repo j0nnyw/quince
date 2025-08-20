@@ -22,6 +22,7 @@
 #include <quince/detail/array_of_int16.h>
 #include <quince/detail/array_of_int32.h>
 #include <quince/detail/array_of_int64.h>
+#include <quince/detail/array_of_string.h>
 
 
 /*
@@ -54,6 +55,7 @@ enum class column_type {
     array_of_int16,
     array_of_int32,
     array_of_int64,
+    array_of_string,
     none
 };
 
@@ -90,6 +92,7 @@ QUINCE_SPECIFY_COLUMN_TYPE(quince::timestamp_with_tz,   column_type::timestamp_w
 QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int16,      column_type::array_of_int16)
 QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int32,      column_type::array_of_int32)
 QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_int64,      column_type::array_of_int64)
+QUINCE_SPECIFY_COLUMN_TYPE(quince::array_of_string,     column_type::array_of_string)
 QUINCE_SPECIFY_COLUMN_TYPE(boost::none_t,               column_type::none)
 
 

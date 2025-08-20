@@ -32,7 +32,7 @@ public:
     explicit cell(const CxxType &value) {
         set(value);
     }
- 
+
     void clear();
 
     template<typename CxxType>
@@ -54,6 +54,7 @@ public:
     void set(const array_of_int16 &);
     void set(const array_of_int32 &);
     void set(const array_of_int64 &);
+    void set(const array_of_string &);
 
     template<typename CxxType>
     void
@@ -85,6 +86,7 @@ public:
     void get(array_of_int16 &) const;
     void get(array_of_int32 &) const;
     void get(array_of_int64 &) const;
+    void get(array_of_string &) const;
 
     column_type type() const;
 

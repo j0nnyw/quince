@@ -39,7 +39,7 @@ public:
 
     virtual column_id_set imports() const override;
 
-    virtual void for_each_column(std::function<void(const column_mapper &)>) const override;    
+    virtual void for_each_column(std::function<void(const column_mapper &)>) const override;
     virtual void for_each_persistent_column(std::function<void(const persistent_column_mapper &)>) const override;
 
 protected:

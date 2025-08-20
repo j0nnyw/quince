@@ -96,7 +96,7 @@ public:
     void remove();
     void remove_existing();
     bool remove_if_exists();
-    
+
     std::string to_string() const;
 
 

@@ -259,7 +259,7 @@ public:
         return left_join<std::tuple<Value, boost::optional<V>>>(that, pred);
     }
 
-    template<typename V> 
+    template<typename V>
     conditional_junction<std::tuple<boost::optional<Value>, V>>
     right_join(const abstract_query<V> &that, const abstract_predicate &pred) const {
         return right_join<std::tuple<boost::optional<Value>, V>>(that, pred);
